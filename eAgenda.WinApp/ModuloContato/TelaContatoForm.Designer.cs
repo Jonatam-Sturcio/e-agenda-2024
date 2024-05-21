@@ -70,7 +70,7 @@
             txtNome.Location = new Point(122, 103);
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(393, 27);
-            txtNome.TabIndex = 3;
+            txtNome.TabIndex = 0;
             // 
             // label2
             // 
@@ -98,7 +98,7 @@
             txtEmail.Location = new Point(122, 136);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(393, 27);
-            txtEmail.TabIndex = 3;
+            txtEmail.TabIndex = 1;
             // 
             // label4
             // 
@@ -116,7 +116,7 @@
             txtTelefone.Location = new Point(122, 169);
             txtTelefone.Name = "txtTelefone";
             txtTelefone.Size = new Size(393, 27);
-            txtTelefone.TabIndex = 3;
+            txtTelefone.TabIndex = 2;
             // 
             // label5
             // 
@@ -152,7 +152,7 @@
             txtEmpresa.Location = new Point(358, 202);
             txtEmpresa.Name = "txtEmpresa";
             txtEmpresa.Size = new Size(157, 27);
-            txtEmpresa.TabIndex = 3;
+            txtEmpresa.TabIndex = 4;
             // 
             // btnCancelar
             // 
@@ -161,7 +161,7 @@
             btnCancelar.Location = new Point(415, 332);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(100, 37);
-            btnCancelar.TabIndex = 4;
+            btnCancelar.TabIndex = 6;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
@@ -172,7 +172,7 @@
             btnGravar.Location = new Point(309, 332);
             btnGravar.Name = "btnGravar";
             btnGravar.Size = new Size(100, 37);
-            btnGravar.TabIndex = 4;
+            btnGravar.TabIndex = 5;
             btnGravar.Text = "Gravar";
             btnGravar.UseVisualStyleBackColor = true;
             btnGravar.Click += btnGravar_Click;

@@ -27,7 +27,17 @@
             DateTime data = DateTime.Parse(txtData.Text);
             DateTime horaInicio = DateTime.Parse(txtHoraInicio.Text);
             DateTime horaTermino = DateTime.Parse(txtHoraTermino.Text);
+
             compromisso = new Compromisso(assunto, local, data, horaInicio, horaTermino);
+
+            List<string> erros = compromisso.Validar();
+
+            if (erros.Count > 0)
+            {
+                TelaPrincipalForm.Instancia.AtualizarRodape(erros[0]);
+
+                DialogResult = DialogResult.None;
+            }
         }
     }
 }
