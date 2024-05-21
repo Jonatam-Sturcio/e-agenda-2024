@@ -26,14 +26,52 @@ namespace eAgenda.WinApp.ModuloContato
 
             DialogResult resultado = telaContato.ShowDialog();
 
-            if (resultado == DialogResult.OK)
-            {
-                Contato novoContato = telaContato.Contato;
+            if (resultado != DialogResult.OK)
+                return;
 
-                repositorioContato.Cadastrar(novoContato);
+            Contato novoContato = telaContato.Contato;
 
-                CarregarContatos();
-            }
+            repositorioContato.Cadastrar(novoContato);
+
+            CarregarContatos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoContato.Nome}\" foi criado com sucesso!");
+        }
+        public override void Editar()
+        {
+            TelaContatoForm telaContato = new();
+
+            Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
+
+            telaContato.Contato = contatoSelecionado;
+
+            DialogResult resultado = telaContato.ShowDialog();
+
+            if (resultado != DialogResult.OK) return;
+
+            Contato contatoEditado = telaContato.Contato;
+
+            repositorioContato.Editar(contatoSelecionado.Id, contatoEditado);
+
+            CarregarContatos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{contatoSelecionado.Nome}\" foi editado com sucesso!");
+        }
+
+        public override void Excluir()
+        {
+            Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
+            DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{contatoSelecionado.Nome}\"?"
+                , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            repositorioContato.Excluir(contatoSelecionado.Id);
+
+            CarregarContatos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{contatoSelecionado.Nome}\" foi excluído com sucesso!");
         }
 
         private void CarregarContatos()
@@ -52,5 +90,7 @@ namespace eAgenda.WinApp.ModuloContato
 
             return listagemContato;
         }
+
+
     }
 }

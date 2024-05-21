@@ -13,5 +13,12 @@
             foreach (Compromisso compromisso in compromissos)
                 listCompromissos.Items.Add(compromisso);
         }
+        public Compromisso ObterRegistroSelecionado()
+        {
+            if (listCompromissos.SelectedItems == null)
+                return null;
+
+            return (Compromisso)listCompromissos.SelectedItem;
+        }
     }
 }

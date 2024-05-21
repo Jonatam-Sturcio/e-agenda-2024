@@ -24,14 +24,53 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             DialogResult resultado = telaCompromisso.ShowDialog();
 
-            if (resultado == DialogResult.OK)
-            {
-                Compromisso novoCompromisso = telaCompromisso.Compromisso;
+            if (resultado != DialogResult.OK)
+                return;
 
-                repositorioCompromisso.Cadastrar(novoCompromisso);
+            Compromisso novoCompromisso = telaCompromisso.Compromisso;
 
-                CarregarCompromissos();
-            }
+            repositorioCompromisso.Cadastrar(novoCompromisso);
+
+            CarregarCompromissos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoCompromisso.Assunto}\" foi criado com sucesso!");
+        }
+
+        public override void Editar()
+        {
+            TelaCompromissoForm telaCompromisso = new();
+
+            Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+
+            telaCompromisso.Compromisso = compromissoSelecionado;
+
+            DialogResult resultado = telaCompromisso.ShowDialog();
+
+            if (resultado != DialogResult.OK) return;
+
+            Compromisso compromissoEditado = telaCompromisso.Compromisso;
+
+            repositorioCompromisso.Editar(compromissoSelecionado.Id, compromissoEditado);
+
+            CarregarCompromissos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi editado com sucesso!");
+        }
+
+        public override void Excluir()
+        {
+            Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+            DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{compromissoSelecionado.Assunto}\"?"
+                , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            repositorioCompromisso.Excluir(compromissoSelecionado.Id);
+
+            CarregarCompromissos();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi excluído com sucesso!");
         }
 
         public override UserControl ObterListagem()

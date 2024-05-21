@@ -55,6 +55,7 @@
             // 
             // txtId
             // 
+            txtId.Enabled = false;
             txtId.Location = new Point(68, 40);
             txtId.Name = "txtId";
             txtId.Size = new Size(100, 23);
@@ -153,6 +154,7 @@
             // 
             // btnCancelar
             // 
+            btnCancelar.DialogResult = DialogResult.Cancel;
             btnCancelar.Location = new Point(419, 183);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(115, 32);

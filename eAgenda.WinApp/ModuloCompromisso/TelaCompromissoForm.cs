@@ -3,7 +3,18 @@
     public partial class TelaCompromissoForm : Form
     {
         private Compromisso compromisso;
-        public Compromisso Compromisso { get { return compromisso; } }
+        public Compromisso Compromisso
+        {
+            set
+            {
+                txtAssunto.Text = value.Assunto;
+                txtLocal.Text = value.Local;
+                txtData.Text = value.Data.ToShortDateString();
+                txtHoraInicio.Text = value.HoraInicio.ToShortTimeString();
+                txtHoraTermino.Text = value.HoraTermino.ToShortTimeString();
+            }
+            get { return compromisso; }
+        }
         public TelaCompromissoForm()
         {
             InitializeComponent();
