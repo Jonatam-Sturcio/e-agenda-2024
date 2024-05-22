@@ -33,7 +33,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
                 if (value.Contato != null)
                 {
                     chkPossuiContato.Checked = true;
-                    cmbContatos.SelectedIndex = contatos.IndexOf(value.Contato);
+                    cmbContatos.SelectedItem = value.Contato;
                 }
             }
             get { return compromisso; }
@@ -46,7 +46,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
         {
             cmbContatos.Items.Clear();
             foreach (Contato contato in contatos)
-                cmbContatos.Items.Add(contato.Nome);
+                cmbContatos.Items.Add(contato);
         }
 
         private void btnGravar_Click(object sender, EventArgs e)
