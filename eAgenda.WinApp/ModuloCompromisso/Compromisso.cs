@@ -6,16 +6,18 @@ namespace eAgenda.WinApp.ModuloCompromisso
     public class Compromisso : EntidadeBase
     {
         public string Assunto { get; set; }
-        public string Local { get; set; }
+        public string Categoria { get; set; }
+        public string Endereco { get; set; }
         public DateTime Data { get; set; }
         public DateTime HoraInicio { get; set; }
         public DateTime HoraTermino { get; set; }
         public Contato Contato { get; set; }
 
-        public Compromisso(string assunto, string local, DateTime data, DateTime horaInicio, DateTime horaTermino)
+        public Compromisso(string assunto, string categoria, string endereco, DateTime data, DateTime horaInicio, DateTime horaTermino)
         {
             Assunto = assunto;
-            Local = local;
+            Categoria = categoria;
+            Endereco = endereco;
             Data = data;
             HoraInicio = horaInicio;
             HoraTermino = horaTermino;
@@ -26,7 +28,8 @@ namespace eAgenda.WinApp.ModuloCompromisso
             Compromisso atualizado = (Compromisso)novoRegistro;
 
             Assunto = atualizado.Assunto;
-            Local = atualizado.Local;
+            Endereco = atualizado.Endereco;
+            Categoria = atualizado.Categoria;
             Data = atualizado.Data;
             HoraInicio = atualizado.HoraInicio;
             HoraTermino = atualizado.HoraTermino;
@@ -41,15 +44,22 @@ namespace eAgenda.WinApp.ModuloCompromisso
             if (string.IsNullOrEmpty(Assunto.Trim()))
                 erros.Add("O campo \"nome\" é obrigatório");
 
-            if (string.IsNullOrEmpty(Local.Trim()))
+            if (string.IsNullOrEmpty(Endereco.Trim()))
                 erros.Add("O campo \"telefone\" é obrigatório");
 
             return erros;
         }
         public override string ToString()
         {
-            return $"Id: {Id}, Assunto: {Assunto}, Local: {Local}, Data: {Data.ToString("dd/MM/yyyy")}, " +
-                $"Hora de Inicio: {HoraInicio.TimeOfDay}, Hora de Termino: {HoraTermino.TimeOfDay}";
+            if (Contato != null)
+                return $"Id: {Id}, Assunto: {Assunto}, Contato: {Contato.Nome}, Data: {Data.ToString("dd/MM/yyyy")}, " +
+                $"Início: {HoraInicio.TimeOfDay}, Término: {HoraTermino.TimeOfDay}" +
+                $"Categoria: {Categoria} ,Endereço: {Endereco}";
+
+            else
+                return $"Id: {Id}, Assunto: {Assunto},Data: {Data.ToString("dd/MM/yyyy")}, " +
+                $"Início: {HoraInicio.TimeOfDay}, Término: {HoraTermino.TimeOfDay}" +
+                $"Categoria: {Categoria} ,Endereço: {Endereco}";
         }
     }
 }

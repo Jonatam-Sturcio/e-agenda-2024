@@ -39,7 +39,7 @@ namespace eAgenda.WinApp
 
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
-            controlador = new ControladorCompromisso(repositorioCompromisso);
+            controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
 

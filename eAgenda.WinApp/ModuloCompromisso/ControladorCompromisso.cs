@@ -1,4 +1,5 @@
 ﻿using eAgenda.WinApp.Compartilhado;
+using eAgenda.WinApp.ModuloContato;
 
 namespace eAgenda.WinApp.ModuloCompromisso
 {
@@ -6,10 +7,12 @@ namespace eAgenda.WinApp.ModuloCompromisso
     {
         private RepositorioCompromisso repositorioCompromisso;
         private ListagemCompromissoControl listagemCompromisso;
+        private RepositorioContato repositorioContato;
 
-        public ControladorCompromisso(RepositorioCompromisso repositorio)
+        public ControladorCompromisso(RepositorioCompromisso repositorio, RepositorioContato repContato)
         {
             repositorioCompromisso = repositorio;
+            repositorioContato = repContato;
         }
         public override string TipoCadastro { get { return "Compromissos"; } }
 
@@ -21,6 +24,8 @@ namespace eAgenda.WinApp.ModuloCompromisso
         public override void Adicionar()
         {
             TelaCompromissoForm telaCompromisso = new TelaCompromissoForm();
+
+            telaCompromisso.Contatos = repositorioContato.SelecionarTodos();
 
             DialogResult resultado = telaCompromisso.ShowDialog();
 
@@ -41,6 +46,8 @@ namespace eAgenda.WinApp.ModuloCompromisso
             TelaCompromissoForm telaCompromisso = new();
 
             Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+
+            telaCompromisso.Contatos = repositorioContato.SelecionarTodos();
 
             telaCompromisso.Compromisso = compromissoSelecionado;
 
