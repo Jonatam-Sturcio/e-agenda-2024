@@ -16,7 +16,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
             set
             {
                 txtAssunto.Text = value.Assunto;
-                if (value.Categoria == "Remoto")
+                if (value.Categoria == TipoCompromissoEnum.Remoto)
                 {
                     rbRemoto.Checked = true;
                     txtRemoto.Text = value.Endereco;
@@ -58,7 +58,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
                 DateTime horaInicio = dtpHoraInicio.Value;
                 DateTime horaTermino = dtpHoraTermino.Value;
 
-                string categoria = rbPresencial.Checked ? "Presencial" : "Remoto";
+                TipoCompromissoEnum categoria = rbPresencial.Checked ? TipoCompromissoEnum.Presencial : TipoCompromissoEnum.Remoto;
                 string endereco = rbPresencial.Checked ? txtPresencial.Text : txtRemoto.Text;
 
                 compromisso = new Compromisso(assunto, categoria, endereco, data, horaInicio, horaTermino);
@@ -132,7 +132,10 @@ namespace eAgenda.WinApp.ModuloCompromisso
                 CarregarContatos();
             }
             else
+            {
                 cmbContatos.Enabled = false;
+                cmbContatos.SelectedItem = null;
+            }
         }
     }
 }
