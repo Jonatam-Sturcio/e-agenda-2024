@@ -41,6 +41,9 @@ namespace eAgenda.WinApp.ModuloCompromisso
         public TelaCompromissoForm()
         {
             InitializeComponent();
+            dtpData.Value = DateTime.Now;
+            dtpHoraInicio.Value = DateTime.Now;
+            dtpHoraTermino.Value = DateTime.Now;
         }
         private void CarregarContatos()
         {

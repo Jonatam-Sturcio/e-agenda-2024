@@ -20,6 +20,8 @@ namespace eAgenda.WinApp.ModuloContato
 
         public override string ToolTipExcluir { get { return "Excluir um contato existente"; } }
 
+        public override string ToolTipFiltrar { get { return ""; } }
+
         public override void Adicionar()
         {
             TelaContatoForm telaContato = new TelaContatoForm();
@@ -90,7 +92,5 @@ namespace eAgenda.WinApp.ModuloContato
 
             return listagemContato;
         }
-
-
     }
 }

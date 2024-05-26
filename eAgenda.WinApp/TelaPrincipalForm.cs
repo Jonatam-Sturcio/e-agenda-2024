@@ -29,6 +29,7 @@ namespace eAgenda.WinApp
 
         private void contatosMenuItem_Click(object sender, EventArgs e)
         {
+            btnFiltro.Enabled = false;
             controlador = new ControladorContato(repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
@@ -39,6 +40,7 @@ namespace eAgenda.WinApp
 
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
+            btnFiltro.Enabled = true;
             controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
@@ -57,6 +59,7 @@ namespace eAgenda.WinApp
             btnAdicionar.ToolTipText = controladorSelecionado.ToolTipAdicionar;
             btnEditar.ToolTipText = controladorSelecionado.ToolTipEditar;
             btnExcluir.ToolTipText = controladorSelecionado.ToolTipExcluir;
+            btnFiltro.ToolTipText = controladorSelecionado.ToolTipFiltrar;
         }
         private void ConfigurarListagem(ControladorBase controladorSelecionado)
         {
@@ -75,6 +78,11 @@ namespace eAgenda.WinApp
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             controlador.Excluir();
+        }
+
+        private void btnFiltro_Click(object sender, EventArgs e)
+        {
+            controlador.Filtrar();
         }
     }
 }

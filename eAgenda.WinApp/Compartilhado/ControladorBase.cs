@@ -8,10 +8,13 @@
         public abstract string ToolTipEditar { get; }
         public abstract string ToolTipExcluir { get; }
 
+        public abstract string ToolTipFiltrar { get; }
+
         public abstract UserControl ObterListagem();
 
         public abstract void Adicionar();
         public abstract void Editar();
         public abstract void Excluir();
+        public virtual void Filtrar() { }
     }
 }

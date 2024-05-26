@@ -139,7 +139,7 @@
             dtpData.Name = "dtpData";
             dtpData.Size = new Size(135, 23);
             dtpData.TabIndex = 2;
-            dtpData.Value = new DateTime(2024, 5, 22, 0, 0, 0, 0);
+            dtpData.Value = new DateTime(2024, 5, 26, 18, 49, 44, 0);
             // 
             // dtpHoraInicio
             // 

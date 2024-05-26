@@ -21,6 +21,9 @@ namespace eAgenda.WinApp.ModuloCompromisso
         public override string ToolTipEditar { get { return "Editar um compromisso existente"; } }
 
         public override string ToolTipExcluir { get { return "Excluir um compromisso existente"; } }
+
+        public override string ToolTipFiltrar { get { return "Filtrar Compromissos"; } }
+
         public override void Adicionar()
         {
             TelaCompromissoForm telaCompromisso = new TelaCompromissoForm();
@@ -36,7 +39,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Cadastrar(novoCompromisso);
 
-            CarregarCompromissos();
+            CarregarCompromissos(FiltroCompromissoEnum.Todos);
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoCompromisso.Assunto}\" foi criado com sucesso!");
         }
@@ -59,7 +62,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Editar(compromissoSelecionado.Id, compromissoEditado);
 
-            CarregarCompromissos();
+            CarregarCompromissos(FiltroCompromissoEnum.Todos);
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi editado com sucesso!");
         }
@@ -75,7 +78,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Excluir(compromissoSelecionado.Id);
 
-            CarregarCompromissos();
+            CarregarCompromissos(FiltroCompromissoEnum.Todos);
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi excluído com sucesso!");
         }
@@ -85,15 +88,30 @@ namespace eAgenda.WinApp.ModuloCompromisso
             if (listagemCompromisso == null)
                 listagemCompromisso = new ListagemCompromissoControl();
 
-            CarregarCompromissos();
+            CarregarCompromissos(FiltroCompromissoEnum.Todos);
 
             return listagemCompromisso;
         }
-        private void CarregarCompromissos()
+        private void CarregarCompromissos(FiltroCompromissoEnum filtro)
         {
-            List<Compromisso> compromisso = repositorioCompromisso.SelecionarTodos();
 
-            listagemCompromisso.AtualizarRegistros(compromisso);
+            List<Compromisso> compromisso = repositorioCompromisso.SelecionarTodos();
+            listagemCompromisso.AtualizarRegistros(compromisso, filtro);
+
+        }
+        public override void Filtrar()
+        {
+            TelaFiltroCompromisso telaFiltro = new();
+
+            DialogResult resultado = telaFiltro.ShowDialog();
+
+            if (resultado != DialogResult.OK) return;
+
+            FiltroCompromissoEnum filtro = telaFiltro.Filtro;
+
+            CarregarCompromissos(filtro);
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registros foram filtrados com sucesso!");
         }
     }
 }
