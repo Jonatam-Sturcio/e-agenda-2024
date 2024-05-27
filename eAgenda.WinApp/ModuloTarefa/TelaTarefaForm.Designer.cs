@@ -28,24 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            checkedListBox1 = new CheckedListBox();
+            clbObjetivos = new CheckedListBox();
             SuspendLayout();
             // 
-            // checkedListBox1
+            // clbObjetivos
             // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "item 1", "item 2", "item 3", "item 4" });
-            checkedListBox1.Location = new Point(248, 155);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(204, 94);
-            checkedListBox1.TabIndex = 0;
+            clbObjetivos.FormattingEnabled = true;
+            clbObjetivos.Location = new Point(12, 249);
+            clbObjetivos.Name = "clbObjetivos";
+            clbObjetivos.Size = new Size(280, 112);
+            clbObjetivos.TabIndex = 0;
             // 
             // TelaTarefaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(checkedListBox1);
+            Controls.Add(clbObjetivos);
             Name = "TelaTarefaForm";
             Text = "TelaTarefaForm";
             ResumeLayout(false);
@@ -53,6 +52,6 @@
 
         #endregion
 
-        private CheckedListBox checkedListBox1;
+        private CheckedListBox clbObjetivos;
     }
 }
