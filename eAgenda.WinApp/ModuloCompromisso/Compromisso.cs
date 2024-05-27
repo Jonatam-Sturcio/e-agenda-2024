@@ -53,12 +53,12 @@ namespace eAgenda.WinApp.ModuloCompromisso
         {
             if (Contato != null)
                 return $"Id: {Id}, Assunto: {Assunto}, Contato: {Contato.Nome}, Data: {Data.ToString("dd/MM/yyyy")}, " +
-                $"Início: {HoraInicio.TimeOfDay}, Término: {HoraTermino.TimeOfDay}, " +
+                $"Início: {HoraInicio.ToString("HH:mm")}, Término: {HoraTermino.ToString("HH:mm")}, " +
                 $"Categoria: {Categoria} ,Endereço: {Endereco}";
 
             else
                 return $"Id: {Id}, Assunto: {Assunto},Data: {Data.ToString("dd/MM/yyyy")}, " +
-                $"Início: {HoraInicio.TimeOfDay}, Término: {HoraTermino.TimeOfDay}, " +
+                $"Início: {HoraInicio.ToString("HH:mm")}, Término: {HoraTermino.ToString("HH:mm")}, " +
                 $"Categoria: {Categoria} ,Endereço: {Endereco}";
         }
     }

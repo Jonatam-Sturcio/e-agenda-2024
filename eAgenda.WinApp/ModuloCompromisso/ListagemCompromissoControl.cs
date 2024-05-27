@@ -6,34 +6,13 @@
         {
             InitializeComponent();
         }
-        public void AtualizarRegistros(List<Compromisso> compromissos, FiltroCompromissoEnum filtro)
+        public void AtualizarRegistros(List<Compromisso> compromissos)
         {
-            DateTime agora = DateTime.Now;
-
             listCompromissos.Items.Clear();
-            if (filtro == FiltroCompromissoEnum.Todos)
-            {
-                foreach (Compromisso compromisso in compromissos)
-                    listCompromissos.Items.Add(compromisso);
-            }
-            else if (filtro == FiltroCompromissoEnum.Futuros)
-            {
-                foreach (Compromisso compromisso in compromissos)
-                    if (compromisso.Data >= agora)
-                    {
-                        listCompromissos.Items.Add(compromisso);
-                    }
 
-            }
-            else if (filtro == FiltroCompromissoEnum.Passados)
-            {
-                foreach (Compromisso compromisso in compromissos)
-                    if (compromisso.Data < agora)
-                    {
-                        listCompromissos.Items.Add(compromisso);
-                    }
+            foreach (Compromisso compromisso in compromissos)
+                listCompromissos.Items.Add(compromisso);
 
-            }
         }
         public Compromisso ObterRegistroSelecionado()
         {

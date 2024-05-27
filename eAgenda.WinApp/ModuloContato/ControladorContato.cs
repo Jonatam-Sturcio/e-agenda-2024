@@ -20,8 +20,6 @@ namespace eAgenda.WinApp.ModuloContato
 
         public override string ToolTipExcluir { get { return "Excluir um contato existente"; } }
 
-        public override string ToolTipFiltrar { get { return ""; } }
-
         public override void Adicionar()
         {
             TelaContatoForm telaContato = new TelaContatoForm();
@@ -45,6 +43,17 @@ namespace eAgenda.WinApp.ModuloContato
 
             Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
 
+            if (contatoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             telaContato.Contato = contatoSelecionado;
 
             DialogResult resultado = telaContato.ShowDialog();
@@ -63,6 +72,17 @@ namespace eAgenda.WinApp.ModuloContato
         public override void Excluir()
         {
             Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
+            if (contatoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{contatoSelecionado.Nome}\"?"
                 , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 

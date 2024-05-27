@@ -2,6 +2,6 @@
 {
     public enum FiltroCompromissoEnum
     {
-        Todos, Passados, Futuros
+        Todos, Passados, Futuros, Periodo
     }
 }

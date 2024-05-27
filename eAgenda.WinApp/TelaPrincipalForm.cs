@@ -33,9 +33,7 @@ namespace eAgenda.WinApp
             controlador = new ControladorContato(repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
-
-            ConfigurarToolTips(controlador);
-            ConfigurarListagem(controlador);
+            ConfigurarTelaPrincipal(controlador);
         }
 
         private void compromissosMenuItem_Click(object sender, EventArgs e)
@@ -44,9 +42,7 @@ namespace eAgenda.WinApp
             controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
-
-            ConfigurarToolTips(controlador);
-            ConfigurarListagem(controlador);
+            ConfigurarTelaPrincipal(controlador);
         }
 
         private void btnAdicionar_Click(object sender, EventArgs e)
@@ -59,7 +55,9 @@ namespace eAgenda.WinApp
             btnAdicionar.ToolTipText = controladorSelecionado.ToolTipAdicionar;
             btnEditar.ToolTipText = controladorSelecionado.ToolTipEditar;
             btnExcluir.ToolTipText = controladorSelecionado.ToolTipExcluir;
-            btnFiltro.ToolTipText = controladorSelecionado.ToolTipFiltrar;
+
+            if (controladorSelecionado is IControladorFiltravel controladorFiltravel)
+                btnFiltro.ToolTipText = controladorFiltravel.ToolTipFiltrar;
         }
         private void ConfigurarListagem(ControladorBase controladorSelecionado)
         {
@@ -82,7 +80,25 @@ namespace eAgenda.WinApp
 
         private void btnFiltro_Click(object sender, EventArgs e)
         {
-            controlador.Filtrar();
+            if (controlador is IControladorFiltravel controladorFiltravel)
+                controladorFiltravel.Filtrar();
+        }
+        private void ConfigurarTelaPrincipal(ControladorBase controladorSelecionado)
+        {
+            lblTipoCadastro.Text = "Cadastro de " + controladorSelecionado.TipoCadastro;
+
+            ConfigurarToolBox(controladorSelecionado);
+            ConfigurarListagem(controladorSelecionado);
+        }
+        private void ConfigurarToolBox(ControladorBase controladorSelecionado)
+        {
+            btnAdicionar.Enabled = controladorSelecionado is ControladorBase;
+            btnEditar.Enabled = controladorSelecionado is ControladorBase;
+            btnExcluir.Enabled = controladorSelecionado is ControladorBase;
+
+            btnFiltro.Enabled = controladorSelecionado is IControladorFiltravel;
+
+            ConfigurarToolTips(controladorSelecionado);
         }
     }
 }

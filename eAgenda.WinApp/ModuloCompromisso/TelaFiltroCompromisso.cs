@@ -6,24 +6,44 @@
         {
             InitializeComponent();
         }
-        private FiltroCompromissoEnum filtro;
-        public FiltroCompromissoEnum Filtro { get { return filtro; } }
+        public FiltroCompromissoEnum Filtro { get; private set; }
+        public DateTime inicioPeriodo { get { return dtpInicio.Value; } }
+        public DateTime TerminoPeriodo { get { return dtpTermino.Value; } }
+
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
 
             if (rbTodos.Checked)
             {
-                filtro = FiltroCompromissoEnum.Todos;
+                Filtro = FiltroCompromissoEnum.Todos;
             }
             else if (rbFuturos.Checked)
             {
-                filtro = FiltroCompromissoEnum.Futuros;
+                Filtro = FiltroCompromissoEnum.Futuros;
+            }
+            else if (rbPassados.Checked)
+            {
+                Filtro = FiltroCompromissoEnum.Passados;
+            }
+            else if (rbPeriodo.Checked)
+            {
+                Filtro = FiltroCompromissoEnum.Periodo;
+            }
+
+        }
+
+        private void rbPeriodo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbPeriodo.Checked)
+            {
+                dtpInicio.Enabled = true;
+                dtpTermino.Enabled = true;
             }
             else
             {
-                filtro = FiltroCompromissoEnum.Passados;
+                dtpInicio.Enabled = false;
+                dtpTermino.Enabled = false;
             }
-
         }
     }
 }

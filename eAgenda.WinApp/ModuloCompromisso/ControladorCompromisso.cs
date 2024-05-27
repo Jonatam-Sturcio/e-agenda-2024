@@ -3,7 +3,7 @@ using eAgenda.WinApp.ModuloContato;
 
 namespace eAgenda.WinApp.ModuloCompromisso
 {
-    internal class ControladorCompromisso : ControladorBase
+    internal class ControladorCompromisso : ControladorBase, IControladorFiltravel
     {
         private RepositorioCompromisso repositorioCompromisso;
         private ListagemCompromissoControl listagemCompromisso;
@@ -22,7 +22,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
         public override string ToolTipExcluir { get { return "Excluir um compromisso existente"; } }
 
-        public override string ToolTipFiltrar { get { return "Filtrar Compromissos"; } }
+        public string ToolTipFiltrar { get { return "Filtrar Compromissos"; } }
 
         public override void Adicionar()
         {
@@ -39,7 +39,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Cadastrar(novoCompromisso);
 
-            CarregarCompromissos(FiltroCompromissoEnum.Todos);
+            CarregarCompromissos();
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoCompromisso.Assunto}\" foi criado com sucesso!");
         }
@@ -49,6 +49,17 @@ namespace eAgenda.WinApp.ModuloCompromisso
             TelaCompromissoForm telaCompromisso = new();
 
             Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+
+            if (compromissoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
             telaCompromisso.Contatos = repositorioContato.SelecionarTodos();
 
@@ -62,7 +73,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Editar(compromissoSelecionado.Id, compromissoEditado);
 
-            CarregarCompromissos(FiltroCompromissoEnum.Todos);
+            CarregarCompromissos();
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi editado com sucesso!");
         }
@@ -70,6 +81,18 @@ namespace eAgenda.WinApp.ModuloCompromisso
         public override void Excluir()
         {
             Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+
+            if (compromissoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{compromissoSelecionado.Assunto}\"?"
                 , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -78,7 +101,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             repositorioCompromisso.Excluir(compromissoSelecionado.Id);
 
-            CarregarCompromissos(FiltroCompromissoEnum.Todos);
+            CarregarCompromissos();
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi excluído com sucesso!");
         }
@@ -88,18 +111,18 @@ namespace eAgenda.WinApp.ModuloCompromisso
             if (listagemCompromisso == null)
                 listagemCompromisso = new ListagemCompromissoControl();
 
-            CarregarCompromissos(FiltroCompromissoEnum.Todos);
+            CarregarCompromissos();
 
             return listagemCompromisso;
         }
-        private void CarregarCompromissos(FiltroCompromissoEnum filtro)
+        private void CarregarCompromissos()
         {
 
             List<Compromisso> compromisso = repositorioCompromisso.SelecionarTodos();
-            listagemCompromisso.AtualizarRegistros(compromisso, filtro);
+            listagemCompromisso.AtualizarRegistros(compromisso);
 
         }
-        public override void Filtrar()
+        public void Filtrar()
         {
             TelaFiltroCompromisso telaFiltro = new();
 
@@ -109,9 +132,26 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
             FiltroCompromissoEnum filtro = telaFiltro.Filtro;
 
-            CarregarCompromissos(filtro);
+            List<Compromisso> compromissosSelecionados;
 
-            TelaPrincipalForm.Instancia.AtualizarRodape($"O registros foram filtrados com sucesso!");
+            if (filtro == FiltroCompromissoEnum.Passados)
+                compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosPassados();
+
+            else if (filtro == FiltroCompromissoEnum.Futuros)
+                compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosFuturos();
+
+            else if (filtro == FiltroCompromissoEnum.Periodo)
+            {
+                DateTime dataInicio = telaFiltro.inicioPeriodo;
+                DateTime dataTermino = telaFiltro.TerminoPeriodo;
+
+                compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosPorPeriodo(dataInicio, dataTermino);
+            }
+            else
+                compromissosSelecionados = repositorioCompromisso.SelecionarTodos();
+
+            listagemCompromisso.AtualizarRegistros(compromissosSelecionados);
+            TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {compromissosSelecionados.Count} registros...");
         }
     }
 }
