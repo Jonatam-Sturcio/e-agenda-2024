@@ -25,9 +25,9 @@ namespace eAgenda.WinApp.ModuloCompromisso
                     c.HoraTermino.ToString(@"hh\:mm"),
                     c.Contato);
         }
-        public Compromisso ObterRegistroSelecionado()
+        public int ObterRegistroSelecionado()
         {
-            return null;
+            return grid.SelecionarId();
         }
         private DataGridViewColumn[] ObterColunas()
         {

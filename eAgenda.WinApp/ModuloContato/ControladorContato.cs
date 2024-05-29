@@ -41,7 +41,7 @@ namespace eAgenda.WinApp.ModuloContato
         {
             TelaContatoForm telaContato = new();
 
-            Contato contatoSelecionado = tabelaContato.ObterRegistroSelecionado();
+            Contato contatoSelecionado = repositorioContato.SelecionarPorId(tabelaContato.ObterRegistroSelecionado());
 
             if (contatoSelecionado == null)
             {
@@ -71,7 +71,7 @@ namespace eAgenda.WinApp.ModuloContato
 
         public override void Excluir()
         {
-            Contato contatoSelecionado = tabelaContato.ObterRegistroSelecionado();
+            Contato contatoSelecionado = repositorioContato.SelecionarPorId(tabelaContato.ObterRegistroSelecionado());
             if (contatoSelecionado == null)
             {
                 MessageBox.Show(

@@ -48,7 +48,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
         {
             TelaCompromissoForm telaCompromisso = new();
 
-            Compromisso compromissoSelecionado = TabelaCompromisso.ObterRegistroSelecionado();
+            Compromisso compromissoSelecionado = repositorioCompromisso.SelecionarPorId(TabelaCompromisso.ObterRegistroSelecionado());
 
             if (compromissoSelecionado == null)
             {
@@ -80,7 +80,7 @@ namespace eAgenda.WinApp.ModuloCompromisso
 
         public override void Excluir()
         {
-            Compromisso compromissoSelecionado = TabelaCompromisso.ObterRegistroSelecionado();
+            Compromisso compromissoSelecionado = repositorioCompromisso.SelecionarPorId(TabelaCompromisso.ObterRegistroSelecionado());
 
             if (compromissoSelecionado == null)
             {

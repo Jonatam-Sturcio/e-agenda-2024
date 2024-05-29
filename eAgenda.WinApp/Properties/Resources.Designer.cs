@@ -73,6 +73,26 @@ namespace eAgenda.WinApp.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btnAdicionarItens {
+            get {
+                object obj = ResourceManager.GetObject("btnAdicionarItens", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnConcluirItens {
+            get {
+                object obj = ResourceManager.GetObject("btnConcluirItens", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnEditar {
             get {
                 object obj = ResourceManager.GetObject("btnEditar", resourceCulture);
@@ -96,6 +116,16 @@ namespace eAgenda.WinApp.Properties {
         internal static System.Drawing.Bitmap btnFiltrar {
             get {
                 object obj = ResourceManager.GetObject("btnFiltrar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnVisualizar {
+            get {
+                object obj = ResourceManager.GetObject("btnVisualizar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -19,9 +19,9 @@ namespace eAgenda.WinApp.ModuloContato
             foreach (Contato c in contatos)
                 grid.Rows.Add(c.Id, c.Nome, c.Telefone, c.Email, c.Empresa, c.Cargo);
         }
-        public Contato ObterRegistroSelecionado()
+        public int ObterRegistroSelecionado()
         {
-            return null;
+            return grid.SelecionarId();
         }
 
         private DataGridViewColumn[] ObterColunas()

@@ -1,6 +1,7 @@
 using eAgenda.WinApp.Compartilhado;
 using eAgenda.WinApp.ModuloCompromisso;
 using eAgenda.WinApp.ModuloContato;
+using eAgenda.WinApp.ModuloTarefa;
 
 namespace eAgenda.WinApp
 {
@@ -10,6 +11,7 @@ namespace eAgenda.WinApp
 
         RepositorioContato repositorioContato;
         RepositorioCompromisso repositorioCompromisso;
+        RepositorioTarefa repositorioTarefa;
 
         public static TelaPrincipalForm Instancia { get; private set; }
         public TelaPrincipalForm()
@@ -19,6 +21,7 @@ namespace eAgenda.WinApp
 
             repositorioContato = new RepositorioContato();
             repositorioCompromisso = new RepositorioCompromisso();
+            repositorioTarefa = new();
 
             Instancia = this;
         }
@@ -29,7 +32,6 @@ namespace eAgenda.WinApp
 
         private void contatosMenuItem_Click(object sender, EventArgs e)
         {
-            btnFiltro.Enabled = false;
             controlador = new ControladorContato(repositorioContato);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
@@ -38,8 +40,14 @@ namespace eAgenda.WinApp
 
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
-            btnFiltro.Enabled = true;
             controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
+
+            lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
+            ConfigurarTelaPrincipal(controlador);
+        }
+        private void tarefasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorTarefa(repositorioTarefa);
 
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
             ConfigurarTelaPrincipal(controlador);
@@ -97,8 +105,22 @@ namespace eAgenda.WinApp
             btnExcluir.Enabled = controladorSelecionado is ControladorBase;
 
             btnFiltro.Enabled = controladorSelecionado is IControladorFiltravel;
+            btnAdicionarItem.Enabled = controladorSelecionado is IControladorSubItens;
+            btnConcluirItem.Enabled = controladorSelecionado is IControladorSubItens;
 
             ConfigurarToolTips(controladorSelecionado);
+        }
+
+        private void btnAdicionarItem_Click(object sender, EventArgs e)
+        {
+            if (controlador is IControladorSubItens controladorSubItens)
+                controladorSubItens.AdicionarItens();
+        }
+
+        private void btnConcluirItem_Click(object sender, EventArgs e)
+        {
+            if (controlador is IControladorSubItens controladorSubItens)
+                controladorSubItens.AtualizarItens();
         }
     }
 }
