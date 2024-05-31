@@ -1,6 +1,8 @@
 using eAgenda.WinApp.Compartilhado;
+using eAgenda.WinApp.ModuloCategoria;
 using eAgenda.WinApp.ModuloCompromisso;
 using eAgenda.WinApp.ModuloContato;
+using eAgenda.WinApp.ModuloDespesa;
 using eAgenda.WinApp.ModuloTarefa;
 
 namespace eAgenda.WinApp
@@ -12,6 +14,8 @@ namespace eAgenda.WinApp
         RepositorioContato repositorioContato;
         RepositorioCompromisso repositorioCompromisso;
         RepositorioTarefa repositorioTarefa;
+        RepositorioDespesa repositorioDespesa;
+        RepositorioCategoria repositorioCategoria;
 
         public static TelaPrincipalForm Instancia { get; private set; }
         public TelaPrincipalForm()
@@ -22,6 +26,8 @@ namespace eAgenda.WinApp
             repositorioContato = new RepositorioContato();
             repositorioCompromisso = new RepositorioCompromisso();
             repositorioTarefa = new();
+            repositorioDespesa = new();
+            repositorioCategoria = new();
 
             Instancia = this;
         }
@@ -52,6 +58,18 @@ namespace eAgenda.WinApp
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
             ConfigurarTelaPrincipal(controlador);
         }
+        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorCategoria(repositorioCategoria);
+            lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
+            ConfigurarTelaPrincipal(controlador);
+        }
+        private void despesasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorDespesa(repositorioDespesa);
+            lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
+            ConfigurarTelaPrincipal(controlador);
+        }
 
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
@@ -66,6 +84,13 @@ namespace eAgenda.WinApp
 
             if (controladorSelecionado is IControladorFiltravel controladorFiltravel)
                 btnFiltro.ToolTipText = controladorFiltravel.ToolTipFiltrar;
+
+            if (controladorSelecionado is IControladorSubItens controladorSubitens)
+            {
+                btnAdicionarItem.ToolTipText = controladorSubitens.ToolTipAdicionar;
+                btnConcluirItem.ToolTipText = controladorSubitens.ToolTipConcluirItens;
+            }
+
         }
         private void ConfigurarListagem(ControladorBase controladorSelecionado)
         {
