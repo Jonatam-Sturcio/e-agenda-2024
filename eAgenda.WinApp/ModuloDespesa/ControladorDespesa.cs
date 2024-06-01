@@ -5,7 +5,7 @@ namespace eAgenda.WinApp.ModuloDespesa
 {
     internal class ControladorDespesa : ControladorBase, IControladorFiltravel
     {
-        private TabelaDespesaControl listDespesa;
+        private TabelaDespesaControl tabelaDespesa;
         private RepositorioDespesa repositorioDespesa;
         private RepositorioCategoria repositorioCategoria;
 
@@ -48,11 +48,63 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public override void Editar()
         {
-            throw new NotImplementedException();
+            TelaDespesaForm telaDespesa = new TelaDespesaForm(repositorioCategoria);
+
+            Despesa despesaSelecionado = repositorioDespesa.SelecionarPorId(tabelaDespesa.ObterRegistroSelecionado());
+
+            if (despesaSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            telaDespesa.Despesa = despesaSelecionado;
+
+            DialogResult resultado = telaDespesa.ShowDialog();
+
+            if (resultado != DialogResult.OK)
+                return;
+
+            Despesa despesaEditada = telaDespesa.Despesa;
+
+            repositorioDespesa.Editar(despesaSelecionado.Id, despesaEditada);
+
+            CarregarDespesa();
+
+            TelaPrincipalForm
+                .Instancia
+                .AtualizarRodape($"O registro \"{despesaEditada.Descricao}\" foi editado com sucesso!");
         }
 
         public override void Excluir()
         {
+            Despesa despesaSelecionado = repositorioDespesa.SelecionarPorId(tabelaDespesa.ObterRegistroSelecionado());
+            if (despesaSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+            DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{despesaSelecionado.Descricao}\"?"
+                , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            repositorioDespesa.Excluir(despesaSelecionado.Id);
+
+            CarregarDespesa();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{despesaSelecionado.Descricao}\" foi excluído com sucesso!");
 
             repositorioDespesa.VerificarCategoriaSemUso(repositorioCategoria);
         }
@@ -64,18 +116,18 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public override UserControl ObterListagem()
         {
-            if (listDespesa == null)
-                listDespesa = new TabelaDespesaControl();
+            if (tabelaDespesa == null)
+                tabelaDespesa = new TabelaDespesaControl();
 
             CarregarDespesa();
 
-            return listDespesa;
+            return tabelaDespesa;
         }
         private void CarregarDespesa()
         {
             List<Despesa> despesa = repositorioDespesa.SelecionarTodos();
 
-            listDespesa.AtualizarRegistros(despesa);
+            tabelaDespesa.AtualizarRegistros(despesa);
         }
     }
 }

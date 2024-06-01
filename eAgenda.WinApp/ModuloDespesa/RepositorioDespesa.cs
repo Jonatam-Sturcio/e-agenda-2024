@@ -7,7 +7,18 @@ namespace eAgenda.WinApp.ModuloDespesa
     {
         internal void VerificarCategoriaSemUso(RepositorioCategoria repositorioCategoria)
         {
-            throw new NotImplementedException();
+            bool EmUso;
+            foreach (Categoria c in repositorioCategoria.SelecionarTodos())
+            {
+                EmUso = false;
+                foreach (Despesa d in registros)
+                {
+                    if (d.Categorias.Contains(c))
+                        EmUso = true;
+                }
+                c.EmUso = EmUso;
+            }
+
         }
     }
 }

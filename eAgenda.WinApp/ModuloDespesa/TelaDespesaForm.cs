@@ -16,6 +16,11 @@ namespace eAgenda.WinApp.ModuloDespesa
                 txtValor.Text = value.Valor.ToString();
                 dtpData.Value = value.Data;
                 cbFormaPagamento.SelectedItem = value.FormaPagamento;
+                cbCategorias.SelectedItem = value.Categorias.First();
+                foreach (Categoria cat in value.Categorias)
+                {
+                    listCategoria.Items.Add(cat);
+                }
             }
         }
         public TelaDespesaForm(RepositorioCategoria repoCategoria)
@@ -26,16 +31,11 @@ namespace eAgenda.WinApp.ModuloDespesa
         }
         private void CarregarCategorias(List<Categoria> categorias)
         {
-            int i = 0;
-
+            listCategoria.Items.Clear();
             foreach (Categoria cat in categorias)
             {
-                listCategoria.Items.Add(cat);
-
-                if (despesa != null && despesa.Categorias.Contains(cat))
-                    listCategoria.SetItemChecked(i, true);
-
-                i++;
+                cbCategorias.Items.Add(cat);
+                cbCategorias.SelectedIndex = 0;
             }
         }
         private void CarregarFormasPagamento()
@@ -54,11 +54,29 @@ namespace eAgenda.WinApp.ModuloDespesa
             DateTime data = dtpData.Value;
             FormaPagamentoEnum formaPag = (FormaPagamentoEnum)cbFormaPagamento.SelectedItem;
             List<Categoria> categorias = new();
-            foreach (Categoria cat in listCategoria.CheckedItems.Cast<Categoria>().ToList())
+
+            foreach (Categoria cat in listCategoria.Items.Cast<Categoria>().ToList())
             {
                 categorias.Add(cat);
             }
             despesa = new Despesa(descricao, valor, data, formaPag, categorias);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listCategoria.Items.Contains(cbCategorias.SelectedItem))
+                TelaPrincipalForm.Instancia.AtualizarRodape($"Categoria \"{cbCategorias.SelectedItem}\" já incluída!");
+            else
+                listCategoria.Items.Add(cbCategorias.SelectedItem);
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            if (listCategoria.SelectedItem == null)
+            {
+                MessageBox.Show("É necessário selecionar uma categoria para remover!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            listCategoria.Items.Remove(listCategoria.SelectedItem);
         }
     }
 }

@@ -41,13 +41,16 @@
             txtValor = new TextBox();
             dtpData = new DateTimePicker();
             cbFormaPagamento = new ComboBox();
-            listCategoria = new CheckedListBox();
+            listCategoria = new ListBox();
+            cbCategorias = new ComboBox();
+            button3 = new Button();
+            btnRemover = new Button();
             SuspendLayout();
             // 
             // button1
             // 
             button1.DialogResult = DialogResult.OK;
-            button1.Location = new Point(173, 302);
+            button1.Location = new Point(194, 291);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 0;
@@ -58,7 +61,7 @@
             // button2
             // 
             button2.DialogResult = DialogResult.Cancel;
-            button2.Location = new Point(254, 302);
+            button2.Location = new Point(275, 291);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 1;
@@ -104,7 +107,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(187, 84);
+            label5.Location = new Point(200, 84);
             label5.Name = "label5";
             label5.Size = new Size(34, 15);
             label5.TabIndex = 6;
@@ -113,7 +116,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(7, 148);
+            label6.Location = new Point(7, 147);
             label6.Name = "label6";
             label6.Size = new Size(74, 15);
             label6.TabIndex = 7;
@@ -132,7 +135,7 @@
             // 
             txtDescricao.Location = new Point(74, 51);
             txtDescricao.Name = "txtDescricao";
-            txtDescricao.Size = new Size(255, 23);
+            txtDescricao.Size = new Size(276, 23);
             txtDescricao.TabIndex = 9;
             // 
             // txtValor
@@ -145,7 +148,7 @@
             // dtpData
             // 
             dtpData.Format = DateTimePickerFormat.Short;
-            dtpData.Location = new Point(227, 80);
+            dtpData.Location = new Point(248, 80);
             dtpData.Name = "dtpData";
             dtpData.Size = new Size(102, 23);
             dtpData.TabIndex = 11;
@@ -161,16 +164,48 @@
             // listCategoria
             // 
             listCategoria.FormattingEnabled = true;
-            listCategoria.Location = new Point(7, 166);
+            listCategoria.ItemHeight = 15;
+            listCategoria.Location = new Point(7, 176);
             listCategoria.Name = "listCategoria";
-            listCategoria.Size = new Size(322, 130);
+            listCategoria.Size = new Size(343, 109);
             listCategoria.TabIndex = 13;
+            // 
+            // cbCategorias
+            // 
+            cbCategorias.FormattingEnabled = true;
+            cbCategorias.Location = new Point(87, 143);
+            cbCategorias.Name = "cbCategorias";
+            cbCategorias.Size = new Size(113, 23);
+            cbCategorias.TabIndex = 14;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(206, 143);
+            button3.Name = "button3";
+            button3.Size = new Size(68, 23);
+            button3.TabIndex = 15;
+            button3.Text = "Adicionar";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // btnRemover
+            // 
+            btnRemover.Location = new Point(280, 143);
+            btnRemover.Name = "btnRemover";
+            btnRemover.Size = new Size(70, 23);
+            btnRemover.TabIndex = 16;
+            btnRemover.Text = "Remover";
+            btnRemover.UseVisualStyleBackColor = true;
+            btnRemover.Click += btnRemover_Click;
             // 
             // TelaDespesaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(339, 336);
+            ClientSize = new Size(366, 327);
+            Controls.Add(btnRemover);
+            Controls.Add(button3);
+            Controls.Add(cbCategorias);
             Controls.Add(listCategoria);
             Controls.Add(cbFormaPagamento);
             Controls.Add(dtpData);
@@ -209,6 +244,9 @@
         private TextBox txtValor;
         private DateTimePicker dtpData;
         private ComboBox cbFormaPagamento;
-        private CheckedListBox listCategoria;
+        private ListBox listCategoria;
+        private ComboBox cbCategorias;
+        private Button button3;
+        private Button btnRemover;
     }
 }
