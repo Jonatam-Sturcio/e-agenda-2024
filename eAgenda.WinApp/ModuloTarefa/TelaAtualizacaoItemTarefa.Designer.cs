@@ -96,6 +96,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "TelaAtualizacaoItemTarefa";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Atualização dos Itens da tarefa";
             ResumeLayout(false);
             PerformLayout();

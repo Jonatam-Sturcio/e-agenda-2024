@@ -1,4 +1,4 @@
-using eAgenda.WinApp.Compartilhado;
+﻿using eAgenda.WinApp.Compartilhado;
 using eAgenda.WinApp.ModuloCategoria;
 using eAgenda.WinApp.ModuloCompromisso;
 using eAgenda.WinApp.ModuloContato;
@@ -66,7 +66,13 @@ namespace eAgenda.WinApp
         }
         private void despesasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controlador = new ControladorDespesa(repositorioDespesa);
+            if (repositorioCategoria.ValidarPossuiRegistros())
+            {
+                AtualizarRodape("Não há nenhuma categoria cadastrada, por favor, cadastre uma categoria e tente novamente!");
+                return;
+            }
+
+            controlador = new ControladorDespesa(repositorioDespesa, repositorioCategoria);
             lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
             ConfigurarTelaPrincipal(controlador);
         }

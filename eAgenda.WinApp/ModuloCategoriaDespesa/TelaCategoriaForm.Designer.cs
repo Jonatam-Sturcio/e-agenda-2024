@@ -125,6 +125,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "TelaCategoriaForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Cadastro de Categoria";
             ResumeLayout(false);
             PerformLayout();

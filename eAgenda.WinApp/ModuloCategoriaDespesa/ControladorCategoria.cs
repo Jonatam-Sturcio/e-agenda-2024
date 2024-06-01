@@ -48,9 +48,9 @@ namespace eAgenda.WinApp.ModuloCategoria
         {
             TelaCategoriaForm telaCategoria = new();
 
-            Categoria CategoriaSelecionado = repositorioCategoria.SelecionarPorId(tabelaCategoria.ObterRegistroSelecionado());
+            Categoria categoriaSelecionado = repositorioCategoria.SelecionarPorId(tabelaCategoria.ObterRegistroSelecionado());
 
-            if (CategoriaSelecionado == null)
+            if (categoriaSelecionado == null)
             {
                 MessageBox.Show(
                     "Não é possível realizar esta ação sem um registro selecionado.",
@@ -61,7 +61,7 @@ namespace eAgenda.WinApp.ModuloCategoria
                 return;
             }
 
-            telaCategoria.Categoria = CategoriaSelecionado;
+            telaCategoria.Categoria = categoriaSelecionado;
 
             DialogResult resultado = telaCategoria.ShowDialog();
 
@@ -69,17 +69,17 @@ namespace eAgenda.WinApp.ModuloCategoria
 
             Categoria CategoriaEditado = telaCategoria.Categoria;
 
-            repositorioCategoria.Editar(CategoriaSelecionado.Id, CategoriaEditado);
+            repositorioCategoria.Editar(categoriaSelecionado.Id, CategoriaEditado);
 
             CarregarCategorias();
 
-            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{CategoriaSelecionado.Nome}\" foi editado com sucesso!");
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{categoriaSelecionado.Nome}\" foi editado com sucesso!");
         }
 
         public override void Excluir()
         {
-            Categoria CategoriaSelecionado = repositorioCategoria.SelecionarPorId(tabelaCategoria.ObterRegistroSelecionado());
-            if (CategoriaSelecionado == null)
+            Categoria categoriaSelecionado = repositorioCategoria.SelecionarPorId(tabelaCategoria.ObterRegistroSelecionado());
+            if (categoriaSelecionado == null)
             {
                 MessageBox.Show(
                     "Não é possível realizar esta ação sem um registro selecionado.",
@@ -89,18 +89,28 @@ namespace eAgenda.WinApp.ModuloCategoria
                 );
                 return;
             }
+            if (categoriaSelecionado.EmUso)
+            {
+                MessageBox.Show(
+                    "A categoria possui despesas e não pode ser excluída!",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
-            DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{CategoriaSelecionado.Nome}\"?"
+            DialogResult resposta = MessageBox.Show($"Você deseja realmente excluir o registro \"{categoriaSelecionado.Nome}\"?"
                 , "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (resposta != DialogResult.Yes)
                 return;
 
-            repositorioCategoria.Excluir(CategoriaSelecionado.Id);
+            repositorioCategoria.Excluir(categoriaSelecionado.Id);
 
             CarregarCategorias();
 
-            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{CategoriaSelecionado.Nome}\" foi excluído com sucesso!");
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{categoriaSelecionado.Nome}\" foi excluído com sucesso!");
         }
 
         public override UserControl ObterListagem()

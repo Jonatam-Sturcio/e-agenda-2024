@@ -32,6 +32,9 @@ namespace eAgenda.WinApp.ModuloContato
             if (string.IsNullOrEmpty(Email.Trim()))
                 erros.Add("O campo \"email\" é obrigatório");
 
+            if (!Email.Contains("@"))
+                erros.Add("O formato do \"email\" é invalido");
+
             if (string.IsNullOrEmpty(Cargo.Trim()))
                 erros.Add("O campo \"cargo\" é obrigatório");
 

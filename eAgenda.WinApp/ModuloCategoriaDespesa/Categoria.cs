@@ -6,6 +6,7 @@ namespace eAgenda.WinApp.ModuloCategoria
     {
         public string Nome { get; set; }
         public string Identificador { get; set; }
+        public bool EmUso { get; set; }
         public Categoria(string nome, string identificador)
         {
             Nome = nome;
@@ -28,6 +29,10 @@ namespace eAgenda.WinApp.ModuloCategoria
                 erros.Add("O campo \"identificador\" é obrigatório");
 
             return erros;
+        }
+        public override string ToString()
+        {
+            return Nome;
         }
     }
 }

@@ -1,14 +1,18 @@
 ﻿using eAgenda.WinApp.Compartilhado;
+using eAgenda.WinApp.ModuloCategoria;
 
 namespace eAgenda.WinApp.ModuloDespesa
 {
     internal class ControladorDespesa : ControladorBase, IControladorFiltravel
     {
-        RepositorioDespesa repositorioDespesa;
+        private TabelaDespesaControl listDespesa;
+        private RepositorioDespesa repositorioDespesa;
+        private RepositorioCategoria repositorioCategoria;
 
-        public ControladorDespesa(RepositorioDespesa repositorio)
+        public ControladorDespesa(RepositorioDespesa repositorioD, RepositorioCategoria repositorioC)
         {
-            repositorioDespesa = repositorio;
+            repositorioDespesa = repositorioD;
+            repositorioCategoria = repositorioC;
         }
         public override string TipoCadastro => "Despesa";
 
@@ -22,7 +26,24 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public override void Adicionar()
         {
-            throw new NotImplementedException();
+            TelaDespesaForm telaDespesa = new(repositorioCategoria);
+
+            DialogResult resultado = telaDespesa.ShowDialog();
+
+            if (resultado != DialogResult.OK)
+                return;
+
+            Despesa novaDespesa = telaDespesa.Despesa;
+
+            repositorioCategoria.MarcarEmUso(novaDespesa.Categorias);
+
+            repositorioDespesa.Cadastrar(novaDespesa);
+
+            CarregarDespesa();
+
+            TelaPrincipalForm
+                .Instancia
+                .AtualizarRodape($"O registro \"{novaDespesa.Descricao}\" foi criado com sucesso!");
         }
 
         public override void Editar()
@@ -32,7 +53,8 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public override void Excluir()
         {
-            throw new NotImplementedException();
+
+            repositorioDespesa.VerificarCategoriaSemUso(repositorioCategoria);
         }
 
         public void Filtrar()
@@ -42,7 +64,18 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public override UserControl ObterListagem()
         {
-            throw new NotImplementedException();
+            if (listDespesa == null)
+                listDespesa = new TabelaDespesaControl();
+
+            CarregarDespesa();
+
+            return listDespesa;
+        }
+        private void CarregarDespesa()
+        {
+            List<Despesa> despesa = repositorioDespesa.SelecionarTodos();
+
+            listDespesa.AtualizarRegistros(despesa);
         }
     }
 }
