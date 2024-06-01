@@ -111,7 +111,24 @@ namespace eAgenda.WinApp.ModuloDespesa
 
         public void Filtrar()
         {
-            throw new NotImplementedException();
+            TelaFiltroDespesa telaFiltro = new(repositorioCategoria);
+
+            DialogResult resultado = telaFiltro.ShowDialog();
+
+            if (resultado != DialogResult.OK) return;
+
+            Categoria filtro = telaFiltro.Filtro;
+
+            List<Despesa> despesasSelecionados;
+
+            if (filtro != null)
+                despesasSelecionados = repositorioDespesa.SelecionarPorCategoria(filtro);
+
+            else
+                despesasSelecionados = repositorioDespesa.SelecionarTodos();
+
+            tabelaDespesa.AtualizarRegistros(despesasSelecionados);
+            TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {despesasSelecionados.Count} registros...");
         }
 
         public override UserControl ObterListagem()

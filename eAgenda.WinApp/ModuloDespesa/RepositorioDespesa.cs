@@ -5,6 +5,11 @@ namespace eAgenda.WinApp.ModuloDespesa
 {
     internal class RepositorioDespesa : RepositorioBase<Despesa>
     {
+        internal List<Despesa> SelecionarPorCategoria(Categoria filtro)
+        {
+            return registros.FindAll(x => x.Categorias.Contains(filtro));
+        }
+
         internal void VerificarCategoriaSemUso(RepositorioCategoria repositorioCategoria)
         {
             bool EmUso;
