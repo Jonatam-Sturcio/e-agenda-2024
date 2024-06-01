@@ -5,11 +5,11 @@
 Desenvolvido durante o curso Fullstack da [Academia do Programador](https://www.academiadoprogramador.net) 2024
 
 ---
-## Descri��o
+## Descrição
 
-Jos� Pedro gosta de participar em eventos, palestras e congressos de tecnologia. E depois de horas de networking � normal ele voltar para casa com v�rios cart�es com contatos de seus novos colegas. � bastante comum ele deixar estes cart�es guardados, que podem ser esquecidos no fundo de uma gaveta...
+José Pedro gosta de participar em eventos, palestras e congressos de tecnologia. E depois de horas de networking é normal ele voltar para casa com vários cartões com contatos de seus novos colegas. É bastante comum ele deixar estes cartões guardados, que podem ser esquecidos no fundo de uma gaveta...
 
-Para isto, ser� necess�rio fazer uma gest�o de contatos inteligente e JP pretende fazer isso utilizando um sistema.
+Para isto, será necessário fazer uma gestão de contatos inteligente e JP pretende fazer isso utilizando um sistema.
 
 
 ## Funcionalidades
@@ -24,48 +24,48 @@ Para isto, ser� necess�rio fazer uma gest�o de contatos inteligente e JP p
 2. O cadastro do **Compromisso** consiste de:
 	- assunto
 	- data
-	- hora de in�cio
-	- hora de t�rmino
+	- hora de início
+	- hora de término
 	- local (caso presencial)
 	- link (caso remoto)
 	- contato (opcional)
 
 3. O cadastro do **Tarefa** consiste de:
-	- t�tulo
+	- título
 	- prioridade
-	- data de cria��o
-	- data de conclus�o
+	- data de criação
+	- data de conclusão
 	- itens
-	- percentual conclu�do
+	- percentual concluído
 
 	3.1. Item da Tarefa
-	- t�tulo
-	- conclu�do (status)
+	- título
+	- concluído (status)
 	- tarefa
 ---
 
 ## Requisitos
 
-- .NET SDK (recomendado .NET 8.0 ou superior) para compila��o e execu��o do projeto.
+- .NET SDK (recomendado .NET 8.0 ou superior) para compilação e execução do projeto.
 ---
 ## Como Usar
 
-#### Clone o Reposit�rio
+#### Clone o Repositório
 ```
 git clone https://github.com/academia-do-programador/e-agenda-2024.git
 ```
 
-#### Navegue at� a pasta raiz da solu��o
+#### Navegue até a pasta raiz da solução
 ```
 cd e-agenda-2024
 ```
 
-#### Restaure as depend�ncias
+#### Restaure as dependências
 ```
 dotnet restore
 ```
 
-#### Navegue at� a pasta do projeto
+#### Navegue até a pasta do projeto
 ```
 cd eAgenda.WinApp
 ```
